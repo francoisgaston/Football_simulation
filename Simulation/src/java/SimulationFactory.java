@@ -7,34 +7,35 @@ public class SimulationFactory {
 
     public static void simulate(int inicio_intervalo, int fin_intervalo, double v_deseada, double tao ,double[][][] data, BufferedWriter bw) throws IOException {
         double[] SpecialPlayerPosition = new double[]{
-            data[0][2][inicio_intervalo] + Utils.INIT_SPECIAL_X,
-            data[0][3][inicio_intervalo] +  Utils.INIT_SPECIAL_Y,
+            data[0][1][0] + Utils.INIT_SPECIAL_X,
+            data[0][1][1] +  Utils.INIT_SPECIAL_Y,
             Utils.VEL_SPECIAL_X * v_deseada,
             Utils.VEL_SPECIAL_Y * v_deseada};
 
-        for(int i =inicio_intervalo; i<fin_intervalo; i++){
+        for(double[][] frame : data){
 
-            SpecialPlayerPosition = calculatePosition(SpecialPlayerPosition, v_deseada, tao, data, i);
+            SpecialPlayerPosition = calculatePosition(SpecialPlayerPosition, v_deseada, tao, frame);
 
-            bw.write(data[0][0][i] + "," + data[0][1][i] + "," + data[0][2][i] + ',' + data[0][3][i] + ',' + SpecialPlayerPosition[0] + ',' + SpecialPlayerPosition[1] + ',' +
-                    data[1][0][i] + "," + data[2][0][i] + "," + data[1][1][i] + "," + data[2][1][i] + "," + data[1][2][i] + "," + data[2][2][i] + "," + data[1][3][i] + "," + data[2][3][i] + "," + data[1][4][i] + "," + data[2][4][i] + "," + data[1][5][i] + "," + data[2][5][i] + "," + data[1][6][i] + "," + data[2][6][i] + "," + data[1][7][i] + "," + data[2][7][i] + "," + data[1][8][i] + "," + data[2][8][i] + "," + data[1][9][i] + "," + data[2][9][i] + "," + data[1][10][i] + "," + data[2][10][i] + "," + data[1][11][i] + "," + data[2][11][i] + "," +
-                    data[3][0][i] + "," + data[4][0][i] + "," + data[3][1][i] + "," + data[4][1][i] + "," + data[3][2][i] + "," + data[4][2][i] + "," + data[3][3][i] + "," + data[4][3][i] + "," + data[3][4][i] + "," + data[4][4][i] + "," + data[3][5][i] + "," + data[4][5][i] + "," + data[3][6][i] + "," + data[4][6][i] + "," + data[3][7][i] + "," + data[4][7][i] + "," + data[3][8][i] + "," + data[4][8][i] + "," + data[3][9][i] + "," + data[4][9][i] + "," + data[3][10][i] + "," + data[4][10][i] + "," + data[3][11][i] + "," + data[4][11][i]);
+            // [ [frame, time], [Bx,By], [P1x, P2y], [P2x, P2y], ... ]
+            bw.write(frame[0][0] + "," + frame[0][1] + "," + frame[1][0] + ',' + frame[1][1] + ',' + SpecialPlayerPosition[0] + ',' + SpecialPlayerPosition[1] + ',' +
+                    frame[2][0] + "," + frame[2][1] + "," + frame[3][0] + "," + frame[3][1] + "," + frame[4][0] + "," + frame[4][1] + "," + frame[5][0] + "," + frame[5][1] + "," + frame[6][0] + "," + frame[6][1] + "," + frame[7][0] + "," + frame[7][1] + "," + frame[8][0] + "," + frame[8][1] + "," + frame[9][0] + "," + frame[9][1] + "," + frame[10][0] + "," + frame[10][1] + "," + frame[11][0] + "," + frame[11][1] + "," + frame[12][0] + "," + frame[12][1] + "," +
+                    frame[13][0] + "," + frame[13][1] + "," + frame[14][0] + "," + frame[14][1] + "," + frame[15][0] + "," + frame[15][1] + "," + frame[16][0] + "," + frame[16][1] + "," + frame[17][0] + "," + frame[17][1] + "," + frame[18][0] + "," + frame[18][1] + "," + frame[19][0] + "," + frame[19][1] + "," + frame[20][0] + "," + frame[20][1] + "," + frame[21][0] + "," + frame[21][1] + "," + frame[22][0] + "," + frame[22][1] + "," + frame[23][0] + "," + frame[23][1]);
             bw.write("\n");
         }
     }
 
-    public static double[] calculatePosition(double[] SpecialPlayerPosition, double v_deseada, double tao, double[][][] data, int frame){
+    public static double[] calculatePosition(double[] SpecialPlayerPosition, double v_deseada, double tao, double[][] frame){
         BiFunction<Double, Double, Double> acelerationXFuction =
                 (posX, velX) -> {
-                    double d = Math.pow(Math.pow(data[0][2][frame] - posX, 2) + Math.pow(data[0][3][frame] - SpecialPlayerPosition[1], 2), 0.5);
-                    double acelX = (Utils.MASS / tao) * ( (v_deseada * (data[0][2][frame] - posX)  / d) - (velX) );
+                    double d = Math.pow(Math.pow(frame[1][0] - posX, 2) + Math.pow(frame[1][1] - SpecialPlayerPosition[1], 2), 0.5);
+                    double acelX = (Utils.MASS / tao) * ( (v_deseada * (frame[1][0] - posX)  / d) - (velX) );
                     return acelX;
                 };
 
         BiFunction<Double, Double, Double> acelerationYFuction =
                 (posY, velY) -> {
-                    double d = Math.pow(Math.pow(data[0][2][frame] - SpecialPlayerPosition[0], 2) + Math.pow(data[0][3][frame] - posY, 2), 0.5);
-                    double acelY = (Utils.MASS / tao) * ( (v_deseada * (data[0][3][frame] - posY)  / d) - (velY) );
+                    double d = Math.pow(Math.pow(frame[1][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[1][1] - posY, 2), 0.5);
+                    double acelY = (Utils.MASS / tao) * ( (v_deseada * (frame[1][1] - posY)  / d) - (velY) );
                     return acelY;
                 };
 
@@ -52,6 +53,25 @@ public class SimulationFactory {
         return SpecialPlayerPosition;
     }
 
+
+    public static double[][][] clearData(double[][] Local, double[][] Visitante, int inicio_intervalo, int fin_intervalo){
+        double[][][] data = new double[fin_intervalo - inicio_intervalo][2 + 11 + 11][2];
+
+        for(int i=0; i<fin_intervalo - inicio_intervalo; i++){
+            //[frame, time]
+            data[i][0][0] = Local[inicio_intervalo + i][1];
+            data[i][0][1] = Local[inicio_intervalo + i][2];
+            data[i][1][0] = Local[inicio_intervalo + i][31];
+            data[i][1][1] = Local[inicio_intervalo + i][32];
+            for(int j=0; j<11; j++){
+                data[i][2+j][0] = Local[inicio_intervalo + i][3+j*2];
+                data[i][2+j][1] = Local[inicio_intervalo + i][3+j*2+1];
+                data[i][2+j+11][0] = Visitante[inicio_intervalo + i][3+j*2];
+                data[i][2+j+11][1] = Visitante[inicio_intervalo + i][3+j*2+1];
+            }
+        }
+        return data;
+    }
 
     public static double[] GearMethod(double pos, double vel, double deltaTime, BiFunction<Double, Double, Double> acelerationFuction, double[] alpha){
         double dr2 = acelerationFuction.apply(pos, vel);

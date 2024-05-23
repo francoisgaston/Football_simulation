@@ -6,8 +6,8 @@ public class Main {
     public static void main(String[] args) {
 
         // PONER EN UN INPUT
-        int inicio_intervalo = 5;
-        int fin_intervalo = 15;
+        int inicio_intervalo = 55;
+        int fin_intervalo = 500;
         double v_deseada = 4;
         double tao = 2;
         String OutputPath = "Simulation/Output/Salida.csv";
@@ -18,15 +18,8 @@ public class Main {
         double[][] Visitante = new double[141156][29];
         Utils.readCSV("Simulation/Input/TrackingData_Visitante.csv", Visitante);
 
-        double[][][] data = SimulationFactory.clearData(Local, Visitante);
-        //data[0][0][frame] = frame
-        //data[0][1][frame] = time
-        //data[0][2][frame] = ball_X
-        //data[0][3][frame] = ball_Y
-        //data[1][player][frame] = Local_X
-        //data[2][player][frame] = Local_Y
-        //data[3][player][frame] = Visitante_X
-        //data[4][player][frame] = Visitante_Y
+        // [ [frame, time], [Bx,By], [P1x, P2y], [P2x, P2y], ... ]
+        double[][][] data = SimulationFactory.clearData(Local, Visitante, inicio_intervalo, fin_intervalo);
 
 
         try {
