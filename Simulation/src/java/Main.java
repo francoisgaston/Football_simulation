@@ -8,8 +8,8 @@ public class Main {
         // PONER EN UN INPUT
         int inicio_intervalo = 55;
         int fin_intervalo = 500;
-        double v_deseada = 4;
-        double tao = 2;
+        double v_deseada = 0.1;
+        double tao = 0.5;
         String OutputPath = "Simulation/Output/Salida.csv";
 
 

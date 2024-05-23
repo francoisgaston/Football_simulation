@@ -8,7 +8,7 @@ public class SimulationFactory {
     public static void simulate(int inicio_intervalo, int fin_intervalo, double v_deseada, double tao ,double[][][] data, BufferedWriter bw) throws IOException {
         double[] SpecialPlayerPosition = new double[]{
             data[0][1][0] + Utils.INIT_SPECIAL_X,
-            data[0][1][1] +  Utils.INIT_SPECIAL_Y,
+            data[0][1][1] + Utils.INIT_SPECIAL_Y,
             Utils.VEL_SPECIAL_X * v_deseada,
             Utils.VEL_SPECIAL_Y * v_deseada};
 
@@ -29,6 +29,15 @@ public class SimulationFactory {
                 (posX, velX) -> {
                     double d = Math.pow(Math.pow(frame[1][0] - posX, 2) + Math.pow(frame[1][1] - SpecialPlayerPosition[1], 2), 0.5);
                     double acelX = (Utils.MASS / tao) * ( (v_deseada * (frame[1][0] - posX)  / d) - (velX) );
+                    for(double[] player : frame){
+                        double d_player = Math.pow(Math.pow(player[0] - posX, 2) + Math.pow(player[1] - SpecialPlayerPosition[1], 2), 0.5);
+                        double E = d_player - (Utils.RADIUS * 2);
+
+                        double social = Math.pow(Utils.A, -E/Utils.B) * (player[0] - posX)/d_player;
+                        // TODO
+                        //double granular = (-E * Utils.Kn * (player[0] - posX)/d_player ) + (v_deseada * E * Utils.Kt * (player[1] - SpecialPlayerPosition[1])/d_player);
+                        acelX += social ;
+                    }
                     return acelX;
                 };
 
@@ -36,6 +45,15 @@ public class SimulationFactory {
                 (posY, velY) -> {
                     double d = Math.pow(Math.pow(frame[1][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[1][1] - posY, 2), 0.5);
                     double acelY = (Utils.MASS / tao) * ( (v_deseada * (frame[1][1] - posY)  / d) - (velY) );
+                    for(double[] player : frame){
+                        double d_player = Math.pow(Math.pow(player[0] - posY, 2) + Math.pow(player[1] - SpecialPlayerPosition[0], 2), 0.5);
+                        double E = d_player - (Utils.RADIUS * 2);
+
+                        double social = Math.pow(Utils.A, -E/Utils.B) * (player[1] - posY)/d_player;
+                        // TODO
+                        //double granular = (-E * Utils.Kn * (player[1] - posY)/d_player ) + (v_deseada * E * Utils.Kt * (player[0] - SpecialPlayerPosition[0])/d_player);
+                        acelY += social;
+                    }
                     return acelY;
                 };
 
@@ -61,13 +79,14 @@ public class SimulationFactory {
             //[frame, time]
             data[i][0][0] = Local[inicio_intervalo + i][1];
             data[i][0][1] = Local[inicio_intervalo + i][2];
-            data[i][1][0] = Local[inicio_intervalo + i][31];
-            data[i][1][1] = Local[inicio_intervalo + i][32];
+            //[Bx, By]
+            data[i][1][0] = Local[inicio_intervalo + i][31] * Utils.LARGE_X;
+            data[i][1][1] = Local[inicio_intervalo + i][32] * Utils.LARGE_Y;
             for(int j=0; j<11; j++){
-                data[i][2+j][0] = Local[inicio_intervalo + i][3+j*2];
-                data[i][2+j][1] = Local[inicio_intervalo + i][3+j*2+1];
-                data[i][2+j+11][0] = Visitante[inicio_intervalo + i][3+j*2];
-                data[i][2+j+11][1] = Visitante[inicio_intervalo + i][3+j*2+1];
+                data[i][2+j][0] = Local[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
+                data[i][2+j][1] = Local[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
+                data[i][2+j+11][0] = Visitante[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
+                data[i][2+j+11][1] = Visitante[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
             }
         }
         return data;
