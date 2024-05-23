@@ -8,6 +8,8 @@ public class Main {
         // PONER EN UN INPUT
         int inicio_intervalo = 5;
         int fin_intervalo = 15;
+        double v_deseada = 4;
+        double tao = 2;
         String OutputPath = "Simulation/Output/Salida.csv";
 
 
@@ -16,16 +18,27 @@ public class Main {
         double[][] Visitante = new double[141156][29];
         Utils.readCSV("Simulation/Input/TrackingData_Visitante.csv", Visitante);
 
+        double[][][] data = SimulationFactory.clearData(Local, Visitante);
+        //data[0][0][frame] = frame
+        //data[0][1][frame] = time
+        //data[0][2][frame] = ball_X
+        //data[0][3][frame] = ball_Y
+        //data[1][player][frame] = Local_X
+        //data[2][player][frame] = Local_Y
+        //data[3][player][frame] = Visitante_X
+        //data[4][player][frame] = Visitante_Y
+
+
         try {
             FileWriter fw = new FileWriter(OutputPath);
             BufferedWriter bw = new BufferedWriter(fw);
 
             bw.write("Frame,Time,Bx,By,Sx,Sy," +
-                    "LP1x,LP1y,LP2x,LP2y,LP3x,LP3y,LP4x,LP4y,LP5x,LP5y,LP6x,LP6y,LP7x,LP7y,LP8x,LP8y,LP9x,LP9y,LP10x,LP10y,LP11x,LP11y,LP12x,LP12y,LP13x,LP13y,LP14x,LP14y" +
-                    "VP1x,VP1y,VP2x,VP2y,VP3x,VP3y,VP4x,VP4y,VP5x,VP5y,VP6x,VP6y,VP7x,VP7y,VP8x,VP8y,VP9x,VP9y,VP10x,VP10y,VP11x,VP11y,VP12x,VP12y");
+                    "LP1x,LP1y,LP2x,LP2y,LP3x,LP3y,LP4x,LP4y,LP5x,LP5y,LP6x,LP6y,LP7x,LP7y,LP8x,LP8y,LP9x,LP9y,LP10x,LP10y,LP11x,LP11yy" +
+                    "VP1x,VP1y,VP2x,VP2y,VP3x,VP3y,VP4x,VP4y,VP5x,VP5y,VP6x,VP6y,VP7x,VP7y,VP8x,VP8y,VP9x,VP9y,VP10x,VP10y,VP11x,VP11y");
             bw.write("\n");
 
-            SimulationFactory.simulate( inicio_intervalo, fin_intervalo, Local, Visitante, bw);
+            SimulationFactory.simulate(inicio_intervalo, fin_intervalo, v_deseada, tao, data, bw);
 
             bw.close();
         } catch (IOException e) {
