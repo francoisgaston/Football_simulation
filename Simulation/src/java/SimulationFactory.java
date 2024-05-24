@@ -34,7 +34,7 @@ public class SimulationFactory {
                         double E = d_player - (Utils.RADIUS * 2);
 
                         if(E < 0){
-                            granular_N += - Utils.Kn * E * (frame[player][0] - posX)/d_player;;
+                            granular_N += - Utils.Kn * E * (frame[player][0] - posX)/d_player;
                         }
 
                         social += Utils.A * Math.exp(-E/Utils.B) * (frame[player][0] - posX)/d_player;
