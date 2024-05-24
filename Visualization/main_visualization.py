@@ -33,9 +33,9 @@ RADIUS_BALL = 0.1 * 2
 MP4_FORMAT = 'mp4'
 SCALE_FACTOR = 10
 BALL_COLOR = (255, 255, 255)
-LOCO_COLOR = (0, 0, 255)
+LOCO_COLOR = (0, 0, 0)
 LOCAL_COLOR = (255, 0, 0)
-VISITING_COLOR = (0, 255, 255)
+VISITING_COLOR = (0, 0, 255)
 PITCH_COLOR = (0, 255, 0)
 FPS = 30.0
 VIDEO_RES = 2000
@@ -50,7 +50,7 @@ def complete_visualization_opencv(players_coords):
     video_writer = cv2.VideoWriter(OUTPUT_FILENAME + '.' + MP4_FORMAT, fourcc, FPS, (SCALED_WIDTH, SCALED_HEIGHT))
     for index, row in players_coords.iterrows():
         frame = np.full((SCALED_HEIGHT, SCALED_WIDTH, 3), PITCH_COLOR, dtype=np.uint8)
-        print(row['Frame'], '\t', row['Time'], '\t', row['Bx'])
+        
         # Ball
         if math.isnan(row['Bx']) is False:
             ball_pos = [int(row['Bx'] * SCALE_FACTOR), int(row['By'] * SCALE_FACTOR)]
