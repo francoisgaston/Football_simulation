@@ -16,7 +16,7 @@ public class Main {
         double[][] Visitante = new double[141156][29];
         Utils.readCSV("Simulation/Input/TrackingData_Visitante.csv", Visitante);
 
-        oneSimulation(inicio_intervalo, fin_intervalo, v_deseada, tao, Local, Visitante);
+        //oneSimulation(inicio_intervalo, fin_intervalo, v_deseada, tao, Local, Visitante);
 
         tao_variation(inicio_intervalo, fin_intervalo, v_deseada, Local, Visitante);
 
@@ -31,7 +31,7 @@ public class Main {
     public static void tao_variation(int inicio_intervalo, int fin_intervalo, double v_deseada, double[][] Local, double[][] Visitante){
         double tao = 0.1;
         while (tao <= 1){
-            String OutputPath = "Simulation/Output/Salida_t" + tao + ".csv";
+            String OutputPath = "Simulation/Output/Salida_" + tao + "_tao.csv";
             Simulation_wrapper(inicio_intervalo, fin_intervalo, v_deseada, tao, OutputPath, Local, Visitante);
             tao += 0.05;
         }
@@ -40,7 +40,7 @@ public class Main {
     public static void velocity_variation(int inicio_intervalo, int fin_intervalo, double tao, double[][] Local, double[][] Visitante){
         double v_deseada = 0.1;
         while (v_deseada <= 13){
-            String OutputPath = "Simulation/Output/Salida_v" + v_deseada + ".csv";
+            String OutputPath = "Simulation/Output/Salida_" + v_deseada + "_vel.csv";
             Simulation_wrapper(inicio_intervalo, fin_intervalo, v_deseada, tao, OutputPath, Local, Visitante);
             v_deseada += 0.5;
         }
