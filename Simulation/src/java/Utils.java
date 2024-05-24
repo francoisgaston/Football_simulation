@@ -21,7 +21,7 @@ public class Utils {
     public static double A = 2000;
     public static double B = 0.08;
     public static double MASS = 80;
-    public static double RADIUS = 0.01;
+    public static double RADIUS = 0.5;
 
     /*
     public static SimulationConfig readConfig(String path){

@@ -37,7 +37,7 @@ public class SimulationFactory {
                             granular_N += - Utils.Kn * E * (frame[player][0] - posX)/d_player;
                         }
 
-                        social += Utils.A * Math.exp(-E/Utils.B) * (frame[player][0] - posX)/d_player;
+                        social += - Utils.A * Math.exp(-E/Utils.B) * (frame[player][0] - posX)/d_player;
                     }
                     return (deseo + granular_N + social) / Utils.MASS;
                 };
@@ -56,7 +56,7 @@ public class SimulationFactory {
                             granular_N += - Utils.Kn * E * (frame[player][1] - posY)/d_player;
                         }
 
-                        social += Utils.A * Math.exp(-E/Utils.B) * (frame[player][1] - posY)/d_player;
+                        social += - Utils.A * Math.exp(-E/Utils.B) * (frame[player][1] - posY)/d_player;
                     }
                     return (deseo + granular_N + social) / Utils.MASS;
                 };
