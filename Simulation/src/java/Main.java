@@ -20,9 +20,9 @@ public class Main {
 
         oneSimulation(inicio_intervalo, largo, v_deseada, tao, Local, Visitante);
 
-        tao_variation(inicio_intervalo, largo, v_deseada, Local, Visitante);
+        //tao_variation(inicio_intervalo, largo, v_deseada, Local, Visitante);
 
-        velocity_variation(inicio_intervalo, largo, tao, Local, Visitante);
+        //velocity_variation(inicio_intervalo, largo, tao, Local, Visitante);
     }
 
     public static void oneSimulation(int inicio_intervalo, int largo, double v_deseada, double tao, double[][] Local, double[][] Visitante){

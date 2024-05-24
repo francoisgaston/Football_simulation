@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # CAMBIAR
 # ---------------------------------------------------
 CELDA = 3
-PLAYER = 3
+PLAYER = 0
 VISITANTE = False
 # PLAYER ESPECIAL = 0
 # ---------------------------------------------------
@@ -45,7 +45,7 @@ for i in range(num_rows):
 
 # Crear el mapa de calor
 plt.figure(figsize=(10, 6))
-sns.heatmap(field, cmap='RdYlGn_r', annot=False, cbar=True, xticklabels=False, yticklabels=False)
+sns.heatmap(field, cmap='RdYlGn_r', vmin=0, vmax=800 ,annot=False, cbar=True, xticklabels=False, yticklabels=False)
 
 # Mostrar el gráfico
 plt.show()
