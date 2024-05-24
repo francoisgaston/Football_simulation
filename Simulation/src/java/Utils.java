@@ -7,7 +7,7 @@ public class Utils {
 
     // TODAS LAS CONSTANTES EN SISTEMA INTERNACIONAL (metro, kilogramo, segundo)
 
-    public static double INIT_SPECIAL_X = -10;
+    public static double INIT_SPECIAL_X = 10;
     public static double INIT_SPECIAL_Y = 0;
     public static double VEL_SPECIAL_X = 1;
     public static double VEL_SPECIAL_Y = 0;
@@ -21,7 +21,7 @@ public class Utils {
     public static double A = 2000;
     public static double B = 0.08;
     public static double MASS = 80;
-    public static double RADIUS = 0.6;
+    public static double RADIUS = 0.01;
 
     /*
     public static SimulationConfig readConfig(String path){

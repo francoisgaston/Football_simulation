@@ -1,60 +1,64 @@
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.function.BiFunction;
 
 public class SimulationFactory {
 
-    public static void simulate(int inicio_intervalo, int fin_intervalo, double v_deseada, double tao ,double[][][] data, BufferedWriter bw) throws IOException {
+    public static void simulate(double v_deseada, double tao ,double[][][] data, BufferedWriter bw) throws IOException {
         double[] SpecialPlayerPosition = new double[]{
-            data[0][1][0] + Utils.INIT_SPECIAL_X,
-            data[0][1][1] + Utils.INIT_SPECIAL_Y,
-            Utils.VEL_SPECIAL_X * v_deseada,
-            Utils.VEL_SPECIAL_Y * v_deseada};
+            data[0][1][0] + Utils.INIT_SPECIAL_X, // X = 0
+            data[0][1][1] + Utils.INIT_SPECIAL_Y, // Y = 1
+            Utils.VEL_SPECIAL_X * v_deseada, // Vx = 2
+            Utils.VEL_SPECIAL_Y * v_deseada}; // Vy = 3
 
         for(double[][] frame : data){
-
-            SpecialPlayerPosition = calculatePosition(SpecialPlayerPosition, v_deseada, tao, frame);
-
             // [ [frame, time], [Bx,By], [P1x, P2y], [P2x, P2y], ... ]
             bw.write(frame[0][0] + "," + frame[0][1] + "," + frame[1][0] + ',' + frame[1][1] + ',' + SpecialPlayerPosition[0] + ',' + SpecialPlayerPosition[1] + ',' +
                     frame[2][0] + "," + frame[2][1] + "," + frame[3][0] + "," + frame[3][1] + "," + frame[4][0] + "," + frame[4][1] + "," + frame[5][0] + "," + frame[5][1] + "," + frame[6][0] + "," + frame[6][1] + "," + frame[7][0] + "," + frame[7][1] + "," + frame[8][0] + "," + frame[8][1] + "," + frame[9][0] + "," + frame[9][1] + "," + frame[10][0] + "," + frame[10][1] + "," + frame[11][0] + "," + frame[11][1] + "," + frame[12][0] + "," + frame[12][1] + "," +
                     frame[13][0] + "," + frame[13][1] + "," + frame[14][0] + "," + frame[14][1] + "," + frame[15][0] + "," + frame[15][1] + "," + frame[16][0] + "," + frame[16][1] + "," + frame[17][0] + "," + frame[17][1] + "," + frame[18][0] + "," + frame[18][1] + "," + frame[19][0] + "," + frame[19][1] + "," + frame[20][0] + "," + frame[20][1] + "," + frame[21][0] + "," + frame[21][1] + "," + frame[22][0] + "," + frame[22][1] + "," + frame[23][0] + "," + frame[23][1]);
             bw.write("\n");
+
+            calculatePosition(SpecialPlayerPosition, v_deseada, tao, frame);
         }
     }
 
-    public static double[] calculatePosition(double[] SpecialPlayerPosition, double v_deseada, double tao, double[][] frame){
-        BiFunction<Double, Double, Double> acelerationXFuction =
-                (posX, velX) -> {
-                    double d = Math.pow(Math.pow(frame[1][0] - posX, 2) + Math.pow(frame[1][1] - SpecialPlayerPosition[1], 2), 0.5);
-                    double acelX = (Utils.MASS / tao) * ( (v_deseada * (frame[1][0] - posX)  / d) - (velX) );
-                    for(double[] player : frame){
-                        double d_player = Math.pow(Math.pow(player[0] - posX, 2) + Math.pow(player[1] - SpecialPlayerPosition[1], 2), 0.5);
+    public static void calculatePosition(double[] SpecialPlayerPosition, double v_deseada, double tao, double[][] frame){
+        BiFunction<Double, Double, Double> acelerationXFuction = (posX, velX) -> {
+                    double granular_N = 0, social = 0;
+
+                    double d_ball = Math.pow(Math.pow(frame[1][0] - posX, 2) + Math.pow(frame[1][1] - SpecialPlayerPosition[1], 2), 0.5);
+                    double deseo = Utils.MASS * ( (v_deseada * (frame[1][0] - posX)  / d_ball) - velX ) / tao;
+
+                    for(int player = 2; player<frame.length; player++){
+                        double d_player = Math.pow(Math.pow(frame[player][0] - posX, 2) + Math.pow(frame[player][1] - SpecialPlayerPosition[1], 2), 0.5);
                         double E = d_player - (Utils.RADIUS * 2);
 
-                        double social = Math.pow(Utils.A, -E/Utils.B) * (player[0] - posX)/d_player;
-                        // TODO
-                        //double granular = (-E * Utils.Kn * (player[0] - posX)/d_player ) + (v_deseada * E * Utils.Kt * (player[1] - SpecialPlayerPosition[1])/d_player);
-                        acelX += social ;
+                        if(E < 0){
+                            granular_N += - Utils.Kn * E * (frame[player][0] - posX)/d_player;
+                        }
+
+                        social += Utils.A * Math.exp(-E/Utils.B) * (frame[player][0] - posX)/d_player;
                     }
-                    return acelX;
+                    return (deseo + granular_N + social) / Utils.MASS;
                 };
 
-        BiFunction<Double, Double, Double> acelerationYFuction =
-                (posY, velY) -> {
-                    double d = Math.pow(Math.pow(frame[1][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[1][1] - posY, 2), 0.5);
-                    double acelY = (Utils.MASS / tao) * ( (v_deseada * (frame[1][1] - posY)  / d) - (velY) );
-                    for(double[] player : frame){
-                        double d_player = Math.pow(Math.pow(player[0] - posY, 2) + Math.pow(player[1] - SpecialPlayerPosition[0], 2), 0.5);
+        BiFunction<Double, Double, Double> acelerationYFuction = (posY, velY) -> {
+                    double granular_N = 0, social = 0;
+
+                    double d_ball = Math.pow(Math.pow(frame[1][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[1][1] - posY, 2), 0.5);
+                    double deseo = (Utils.MASS / tao) * ( (v_deseada * (frame[1][1] - posY)  / d_ball) - (velY) );
+
+                    for(int player = 2; player<frame.length; player++){
+                        double d_player = Math.pow(Math.pow(frame[player][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[player][1] - posY, 2), 0.5);
                         double E = d_player - (Utils.RADIUS * 2);
 
-                        double social = Math.pow(Utils.A, -E/Utils.B) * (player[1] - posY)/d_player;
-                        // TODO
-                        //double granular = (-E * Utils.Kn * (player[1] - posY)/d_player ) + (v_deseada * E * Utils.Kt * (player[0] - SpecialPlayerPosition[0])/d_player);
-                        acelY += social;
+                        if(E < 0){
+                            granular_N += - Utils.Kn * E * (frame[player][1] - posY)/d_player;
+                        }
+
+                        social += Utils.A * Math.exp(-E/Utils.B) * (frame[player][1] - posY)/d_player;
                     }
-                    return acelY;
+                    return (deseo + granular_N + social) / Utils.MASS;
                 };
 
         double[] rx;
@@ -68,7 +72,6 @@ public class SimulationFactory {
             SpecialPlayerPosition[2] = rx[1];
             SpecialPlayerPosition[3] = ry[1];
         }
-        return SpecialPlayerPosition;
     }
 
 
