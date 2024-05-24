@@ -27,7 +27,7 @@ public class Main {
             BufferedWriter bw = new BufferedWriter(fw);
 
             bw.write("Frame,Time,Bx,By,Sx,Sy," +
-                    "LP1x,LP1y,LP2x,LP2y,LP3x,LP3y,LP4x,LP4y,LP5x,LP5y,LP6x,LP6y,LP7x,LP7y,LP8x,LP8y,LP9x,LP9y,LP10x,LP10y,LP11x,LP11yy" +
+                    "LP1x,LP1y,LP2x,LP2y,LP3x,LP3y,LP4x,LP4y,LP5x,LP5y,LP6x,LP6y,LP7x,LP7y,LP8x,LP8y,LP9x,LP9y,LP10x,LP10y,LP11x,LP11y," +
                     "VP1x,VP1y,VP2x,VP2y,VP3x,VP3y,VP4x,VP4y,VP5x,VP5y,VP6x,VP6y,VP7x,VP7y,VP8x,VP8y,VP9x,VP9y,VP10x,VP10y,VP11x,VP11y");
             bw.write("\n");
 
