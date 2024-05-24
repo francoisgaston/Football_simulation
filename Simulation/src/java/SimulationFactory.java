@@ -1,5 +1,4 @@
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.function.BiFunction;
 
@@ -20,49 +19,50 @@ public class SimulationFactory {
                     frame[13][0] + "," + frame[13][1] + "," + frame[14][0] + "," + frame[14][1] + "," + frame[15][0] + "," + frame[15][1] + "," + frame[16][0] + "," + frame[16][1] + "," + frame[17][0] + "," + frame[17][1] + "," + frame[18][0] + "," + frame[18][1] + "," + frame[19][0] + "," + frame[19][1] + "," + frame[20][0] + "," + frame[20][1] + "," + frame[21][0] + "," + frame[21][1] + "," + frame[22][0] + "," + frame[22][1] + "," + frame[23][0] + "," + frame[23][1]);
             bw.write("\n");
 
-            SpecialPlayerPosition = calculatePosition(SpecialPlayerPosition, v_deseada, tao, frame);
+            calculatePosition(SpecialPlayerPosition, v_deseada, tao, frame);
 
         }
     }
 
-    public static double[] calculatePosition(double[] SpecialPlayerPosition, double v_deseada, double tao, double[][] frame){
+    public static void calculatePosition(double[] SpecialPlayerPosition, double v_deseada, double tao, double[][] frame){
         BiFunction<Double, Double, Double> acelerationXFuction =
                 (posX, velX) -> {
-                    double d = Math.pow(Math.pow(frame[1][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[1][1] - SpecialPlayerPosition[1], 2), 0.5);
-                    double acelX = (Utils.MASS / tao) * ( (v_deseada * (frame[1][0] - posX)  / d) - (velX) );
+                    double granular_N = 0, social = 0;
+
+                    double d = Math.pow(Math.pow(frame[1][0] - posX, 2) + Math.pow(frame[1][1] - SpecialPlayerPosition[1], 2), 0.5);
+                    double deseo = (Utils.MASS / tao) * ( (v_deseada * (frame[1][0] - posX)  / d) - (velX) );
 
                     for(int player = 2; player<frame.length; player++){
-                        double d_player = Math.pow(Math.pow(frame[player][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[player][1] - SpecialPlayerPosition[1], 2), 0.5);
+                        double d_player = Math.pow(Math.pow(frame[player][0] - posX, 2) + Math.pow(frame[player][1] - SpecialPlayerPosition[1], 2), 0.5);
                         double E = d_player - (Utils.RADIUS * 2);
 
-                        double granular_N = - Utils.Kn * E * (frame[player][0] - posX)/d_player;
                         if(E < 0){
-                            acelX += granular_N;
+                            granular_N += - Utils.Kn * E * (frame[player][0] - posX)/d_player;;
                         }
 
-                        double social = Math.pow(Utils.A, -E/Utils.B) * (frame[player][0] - posX)/d_player;
-                        acelX += social;
+                        social += Utils.A * Math.exp(-E/Utils.B) * (frame[player][0] - posX)/d_player;
                     }
-                    return acelX;
+                    return (deseo + granular_N + social) / Utils.MASS;
                 };
 
         BiFunction<Double, Double, Double> acelerationYFuction =
                 (posY, velY) -> {
-                    double d = Math.pow(Math.pow(frame[1][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[1][1] - SpecialPlayerPosition[1], 2), 0.5);
-                    double acelY = (Utils.MASS / tao) * ( (v_deseada * (frame[1][1] - posY)  / d) - (velY) );
+                    double granular_N = 0, social = 0;
+
+                    double d = Math.pow(Math.pow(frame[1][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[1][1] - posY, 2), 0.5);
+                    double deseo = (Utils.MASS / tao) * ( (v_deseada * (frame[1][1] - posY)  / d) - (velY) );
+
                     for(int player = 2; player<frame.length; player++){
-                        double d_player = Math.pow(Math.pow(frame[player][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[player][1] - SpecialPlayerPosition[1], 2), 0.5);
+                        double d_player = Math.pow(Math.pow(frame[player][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[player][1] - posY, 2), 0.5);
                         double E = d_player - (Utils.RADIUS * 2);
 
-                        double granular_N = - Utils.Kn * E * (frame[player][1] - posY)/d_player;
                         if(E < 0){
-                            acelY += granular_N;
+                            granular_N += - Utils.Kn * E * (frame[player][1] - posY)/d_player;
                         }
 
-                        double social = Math.pow(Utils.A, -E/Utils.B) * (frame[player][1] - posY)/d_player;
-                        acelY += social;
+                        social += Utils.A * Math.exp(-E/Utils.B) * (frame[player][1] - posY)/d_player;
                     }
-                    return acelY;
+                    return (deseo + granular_N + social) / Utils.MASS;
                 };
 
         double[] rx;
@@ -76,7 +76,6 @@ public class SimulationFactory {
             SpecialPlayerPosition[2] = rx[1];
             SpecialPlayerPosition[3] = ry[1];
         }
-        return SpecialPlayerPosition;
     }
 
 

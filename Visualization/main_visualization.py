@@ -57,9 +57,9 @@ def complete_visualization_opencv(players_coords):
             cv2.circle(frame, tuple(ball_pos), int(RADIUS_BALL * SCALE_FACTOR), BALL_COLOR, -1)
 
         # El loco
-        '''if math.isnan(row['Sx']) is False:
+        if math.isnan(row['Sx']) is False:
             loco_pos = [int(row['Sx'] * SCALE_FACTOR), int(row['Sy'] * SCALE_FACTOR)]
-            cv2.circle(frame, tuple(loco_pos), int(RADIUS_PLAYERS * SCALE_FACTOR), LOCO_COLOR, -1)'''
+            cv2.circle(frame, tuple(loco_pos), int(RADIUS_PLAYERS * SCALE_FACTOR), LOCO_COLOR, -1)
 
         # Local players
         for i in range(1,12): # [ 1, 12 )
