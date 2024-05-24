@@ -4,15 +4,14 @@ import java.util.function.BiFunction;
 
 public class SimulationFactory {
 
-    public static void simulate(int inicio_intervalo, int fin_intervalo, double v_deseada, double tao ,double[][][] data, BufferedWriter bw) throws IOException {
+    public static void simulate(double v_deseada, double tao ,double[][][] data, BufferedWriter bw) throws IOException {
         double[] SpecialPlayerPosition = new double[]{
-            data[0][1][0] + Utils.INIT_SPECIAL_X,
-            data[0][1][1] + Utils.INIT_SPECIAL_Y,
-            Utils.VEL_SPECIAL_X * v_deseada,
-            Utils.VEL_SPECIAL_Y * v_deseada};
+            data[0][1][0] + Utils.INIT_SPECIAL_X, // X = 0
+            data[0][1][1] + Utils.INIT_SPECIAL_Y, // Y = 1
+            Utils.VEL_SPECIAL_X * v_deseada, // Vx = 2
+            Utils.VEL_SPECIAL_Y * v_deseada}; // Vy = 3
 
         for(double[][] frame : data){
-
             // [ [frame, time], [Bx,By], [P1x, P2y], [P2x, P2y], ... ]
             bw.write(frame[0][0] + "," + frame[0][1] + "," + frame[1][0] + ',' + frame[1][1] + ',' + SpecialPlayerPosition[0] + ',' + SpecialPlayerPosition[1] + ',' +
                     frame[2][0] + "," + frame[2][1] + "," + frame[3][0] + "," + frame[3][1] + "," + frame[4][0] + "," + frame[4][1] + "," + frame[5][0] + "," + frame[5][1] + "," + frame[6][0] + "," + frame[6][1] + "," + frame[7][0] + "," + frame[7][1] + "," + frame[8][0] + "," + frame[8][1] + "," + frame[9][0] + "," + frame[9][1] + "," + frame[10][0] + "," + frame[10][1] + "," + frame[11][0] + "," + frame[11][1] + "," + frame[12][0] + "," + frame[12][1] + "," +
@@ -20,17 +19,15 @@ public class SimulationFactory {
             bw.write("\n");
 
             calculatePosition(SpecialPlayerPosition, v_deseada, tao, frame);
-
         }
     }
 
     public static void calculatePosition(double[] SpecialPlayerPosition, double v_deseada, double tao, double[][] frame){
-        BiFunction<Double, Double, Double> acelerationXFuction =
-                (posX, velX) -> {
+        BiFunction<Double, Double, Double> acelerationXFuction = (posX, velX) -> {
                     double granular_N = 0, social = 0;
 
-                    double d = Math.pow(Math.pow(frame[1][0] - posX, 2) + Math.pow(frame[1][1] - SpecialPlayerPosition[1], 2), 0.5);
-                    double deseo = (Utils.MASS / tao) * ( (v_deseada * (frame[1][0] - posX)  / d) - (velX) );
+                    double d_ball = Math.pow(Math.pow(frame[1][0] - posX, 2) + Math.pow(frame[1][1] - SpecialPlayerPosition[1], 2), 0.5);
+                    double deseo = Utils.MASS * ( (v_deseada * (frame[1][0] - posX)  / d_ball) - velX ) / tao;
 
                     for(int player = 2; player<frame.length; player++){
                         double d_player = Math.pow(Math.pow(frame[player][0] - posX, 2) + Math.pow(frame[player][1] - SpecialPlayerPosition[1], 2), 0.5);
@@ -45,12 +42,11 @@ public class SimulationFactory {
                     return (deseo + granular_N + social) / Utils.MASS;
                 };
 
-        BiFunction<Double, Double, Double> acelerationYFuction =
-                (posY, velY) -> {
+        BiFunction<Double, Double, Double> acelerationYFuction = (posY, velY) -> {
                     double granular_N = 0, social = 0;
 
-                    double d = Math.pow(Math.pow(frame[1][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[1][1] - posY, 2), 0.5);
-                    double deseo = (Utils.MASS / tao) * ( (v_deseada * (frame[1][1] - posY)  / d) - (velY) );
+                    double d_ball = Math.pow(Math.pow(frame[1][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[1][1] - posY, 2), 0.5);
+                    double deseo = (Utils.MASS / tao) * ( (v_deseada * (frame[1][1] - posY)  / d_ball) - (velY) );
 
                     for(int player = 2; player<frame.length; player++){
                         double d_player = Math.pow(Math.pow(frame[player][0] - SpecialPlayerPosition[0], 2) + Math.pow(frame[player][1] - posY, 2), 0.5);
