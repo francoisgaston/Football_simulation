@@ -10,13 +10,13 @@ from scipy.stats import gaussian_kde
 # ---------------------------------------------------
 CELDA = 4
 PLAYER_1 = 1
-PLAYER_2 = 10
-PLAYER_3 = 15
+PLAYER_2 = 9
+PLAYER_3 = 3
 PLAYER_ESPECIAL = 0
 # ---------------------------------------------------
 
 # Leer los datos desde el archivo CSV
-data = pd.read_csv('../Simulation/Output/Salida_0.1_tao.csv')
+data = pd.read_csv('../Simulation/Output/Salida.csv')
 num_rows, num_cols = data.shape
 
 player_numbers = [4 + PLAYER_1*2, 4 + PLAYER_2*2, 4 + PLAYER_3*2, 4 + PLAYER_ESPECIAL*2]
@@ -33,17 +33,16 @@ for player_number in player_numbers:
         next_posY = data.iloc[i+1, j+1]
         velocity = np.sqrt((posX - next_posX)**2 + (posY - next_posY)**2) / (1/24.0)
         velocities.append(velocity)
-    kde = gaussian_kde(velocities)
-    x = np.linspace(0, 6, 1000)
-    pdf = kde(x)
+
+    sns.kdeplot(velocities, fill=True)
     if player_number == 4 + PLAYER_ESPECIAL*2:
-        plt.plot(x, pdf, label='Player Special')
+        plt.hist(velocities, density=True, label='Jugador')
     if player_number == 4 + PLAYER_1*2:
-        plt.plot(x, pdf, label='Arquero local')
+        plt.hist(velocities, density=True, label='Arquero')
     if player_number == 4 + PLAYER_2*2:
-        plt.plot(x, pdf, label='Jugador local')
+        plt.hist(velocities, density=True, label='Lateral')
     if player_number == 4 + PLAYER_3*2:
-        plt.plot(x, pdf, label='Jugador visitante')
+        plt.hist(velocities, density=True, label='Delantero')
 
 plt.xlabel("Velocidad (m/s)", fontsize=16)
 plt.ylabel("PDF", fontsize=16)

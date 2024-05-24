@@ -7,14 +7,14 @@ import matplotlib.pyplot as plt
 # ---------------------------------------------------
 # CAMBIAR
 # ---------------------------------------------------
-CELDA = 4
-PLAYER = 1
+CELDA = 3
+PLAYER = 3
 VISITANTE = False
 # PLAYER ESPECIAL = 0
 # ---------------------------------------------------
 
 # Leer los datos desde el archivo CSV
-data = pd.read_csv('../Simulation/Output/Salida_0.1_tao.csv')
+data = pd.read_csv('../Simulation/Output/Salida.csv')
 num_rows, num_cols = data.shape
 
 rows = 68 // CELDA # Redondear hacia abajo
@@ -33,6 +33,15 @@ for i in range(num_rows):
     posY = data.iloc[i, j+1]
     iX = int(posX // CELDA)
     iY = int(posY // CELDA)
+    if(iX >= cols):
+        iX = cols - 1
+    if(iY >= rows):
+        iY = rows - 1
+    if(iX < 0):
+        iX = 0
+    if(iY < 0):
+        iY = 0
+    print(iX, iY, data.iloc[i, 0])
     field[iY, iX] += 1
 
 # Crear el mapa de calor

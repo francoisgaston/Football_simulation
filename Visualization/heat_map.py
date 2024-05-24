@@ -26,6 +26,14 @@ for i in range(num_rows):
         posY = data.iloc[i, j+1]
         iX = int(posX // CELDA)
         iY = int(posY // CELDA)
+        if(iX >= cols):
+            iX = cols - 1
+        if(iY >= rows):
+            iY = rows - 1
+        if(iX < 0):
+            iX = 0
+        if(iY < 0):
+            iY = 0
         field[iY, iX] += 1
 
 # Crear el mapa de calor

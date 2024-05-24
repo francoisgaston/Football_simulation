@@ -75,21 +75,31 @@ public class SimulationFactory {
     }
 
 
-    public static double[][][] clearData(double[][] Local, double[][] Visitante, int inicio_intervalo, int fin_intervalo){
-        double[][][] data = new double[fin_intervalo - inicio_intervalo][2 + 11 + 11][2];
+    public static double[][][] clearData(double[][] Local, double[][] Visitante, int inicio_intervalo, int largo){
+        double[][][] data = new double[largo][2 + 11 + 11][2];
+        int i_posta = 0;
 
-        for(int i=0; i<fin_intervalo - inicio_intervalo; i++){
-            //[frame, time]
-            data[i][0][0] = Local[inicio_intervalo + i][1];
-            data[i][0][1] = Local[inicio_intervalo + i][2];
-            //[Bx, By]
-            data[i][1][0] = Local[inicio_intervalo + i][31] * Utils.LARGE_X;
-            data[i][1][1] = Local[inicio_intervalo + i][32] * Utils.LARGE_Y;
-            for(int j=0; j<11; j++){
-                data[i][2+j][0] = Local[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
-                data[i][2+j][1] = Local[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
-                data[i][2+j+11][0] = Visitante[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
-                data[i][2+j+11][1] = Visitante[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
+        for(int i=0; i_posta<largo; i++){
+            if(!Double.isNaN(Local[inicio_intervalo + i][31])){
+                if(!Double.isNaN(Local[inicio_intervalo + i][26])){
+                    System.out.println(data[i_posta][0][0]);
+                }
+                if(!Double.isNaN(Visitante[inicio_intervalo + i][26])){
+                    System.out.println(data[i_posta][0][0]);
+                }
+                //[frame, time]
+                data[i_posta][0][0] = Local[inicio_intervalo + i][1];
+                data[i_posta][0][1] = Local[inicio_intervalo + i][2];
+                //[Bx, By]
+                data[i_posta][1][0] = Local[inicio_intervalo + i][31] * Utils.LARGE_X;
+                data[i_posta][1][1] = Local[inicio_intervalo + i][32] * Utils.LARGE_Y;
+                for(int j=0; j<11; j++){
+                    data[i_posta][2+j][0] = Local[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
+                    data[i_posta][2+j][1] = Local[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
+                    data[i_posta][2+j+11][0] = Visitante[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
+                    data[i_posta][2+j+11][1] = Visitante[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
+                }
+                i_posta++;
             }
         }
         return data;
