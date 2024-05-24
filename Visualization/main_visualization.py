@@ -47,14 +47,14 @@ def complete_visualization_opencv(players_coords):
     SCALED_HEIGHT = int(HEIGHT * SCALE_FACTOR)
     SCALED_WIDTH = int(WIDTH * SCALE_FACTOR)
 
+    background_img = cv2.imread('cancha_de_futbol2.jpg')
+    background_img = cv2.resize(background_img, (SCALED_WIDTH, SCALED_HEIGHT))
+
     video_writer = cv2.VideoWriter(OUTPUT_FILENAME + '.' + MP4_FORMAT, fourcc, FPS, (SCALED_WIDTH, SCALED_HEIGHT))
     for index, row in players_coords.iterrows():
         frame = np.full((SCALED_HEIGHT, SCALED_WIDTH, 3), PITCH_COLOR, dtype=np.uint8)
-        
-        # Ball
-        if math.isnan(row['Bx']) is False:
-            ball_pos = [int(row['Bx'] * SCALE_FACTOR), int(row['By'] * SCALE_FACTOR)]
-            cv2.circle(frame, tuple(ball_pos), int(RADIUS_BALL * SCALE_FACTOR), BALL_COLOR, -1)
+
+        frame = cv2.addWeighted(frame, 0, background_img, 1, 0)
 
         # El loco
         if math.isnan(row['Sx']) is False:
@@ -71,9 +71,10 @@ def complete_visualization_opencv(players_coords):
             visiting_player = [int(row['VP' + str(i) +'x'] * SCALE_FACTOR), int(row['VP' + str(i) +'y'] * SCALE_FACTOR)]
             cv2.circle(frame, tuple(visiting_player), int(RADIUS_PLAYERS * SCALE_FACTOR), VISITING_COLOR, -1)
 
-
-    # Visitors players
-
+        # Ball
+        if math.isnan(row['Bx']) is False:
+            ball_pos = [int(row['Bx'] * SCALE_FACTOR), int(row['By'] * SCALE_FACTOR)]
+            cv2.circle(frame, tuple(ball_pos), int(RADIUS_BALL * SCALE_FACTOR), BALL_COLOR, -1)
 
         video_writer.write(frame)
 
