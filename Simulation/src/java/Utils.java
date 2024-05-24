@@ -6,7 +6,6 @@ import java.io.IOException;
 public class Utils {
 
     // TODAS LAS CONSTANTES EN SISTEMA INTERNACIONAL (metro, kilogramo, segundo)
-
     public static double INIT_SPECIAL_X = 10;
     public static double INIT_SPECIAL_Y = 0;
     public static double VEL_SPECIAL_X = 1;
