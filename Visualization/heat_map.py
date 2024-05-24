@@ -7,11 +7,11 @@ import matplotlib.pyplot as plt
 # ---------------------------------------------------
 # CAMBIAR
 # ---------------------------------------------------
-CELDA = 4
+CELDA = 3
 # ---------------------------------------------------
 
 # Leer los datos desde el archivo CSV
-data = pd.read_csv('../Simulation/Output/Salida_0.1_tao.csv')
+data = pd.read_csv('../Simulation/Output/Salida.csv')
 num_rows, num_cols = data.shape
 
 rows = 68 // CELDA # Redondear hacia abajo

@@ -41,7 +41,6 @@ for i in range(num_rows):
         iX = 0
     if(iY < 0):
         iY = 0
-    print(iX, iY, data.iloc[i, 0])
     field[iY, iX] += 1
 
 # Crear el mapa de calor

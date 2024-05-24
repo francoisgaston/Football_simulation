@@ -32,11 +32,11 @@ for filename in os.listdir(data_directory):
         total_distances.append((float(re.search(regex, filename).group(1)), distance_prom, distance_std))
 
         if filename == "Salida_0.1_vel.csv":
-            plt.plot(df['Time'], distances, label='V=' + str(0.1) + 'm/s' )
+            plt.plot(df['Time'], distances, label='V=' + str(0.1) + ' m/s' )
         if filename == "Salida_5.1_vel.csv":
-            plt.plot(df['Time'], distances, label='V=' + str(5.1) + 'm/s' )
+            plt.plot(df['Time'], distances, label='V=' + str(5.1) + ' m/s' )
         if filename == "Salida_12.6_vel.csv":
-            plt.plot(df['Time'], distances, label='V=' + str(12.6) + 'm/s' )
+            plt.plot(df['Time'], distances, label='V=' + str(12.6) + ' m/s' )
 
 plt.ylabel("Distancia (m)", fontsize=16)
 plt.xlabel("Tiempo (s)", fontsize=16)
