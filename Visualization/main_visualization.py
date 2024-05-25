@@ -74,7 +74,7 @@ def complete_visualization_opencv(players_coords):
         for i in range(1,12): # [ 1, 12 )
             visiting_player = [int(row['VP' + str(i) +'x'] * SCALE_FACTOR), int(row['VP' + str(i) +'y'] * SCALE_FACTOR)]
             cv2.circle(frame, tuple(visiting_player), int(RADIUS_PLAYERS * SCALE_FACTOR), VISITING_COLOR, -1)
-            if i == 10:
+            if i == 13:
                 cv2.circle(frame, tuple(visiting_player), int(RADIUS_PLAYERS * SCALE_FACTOR * 5), CIRCLE_COLOR, 3)
 
         # Ball
