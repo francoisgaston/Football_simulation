@@ -3,12 +3,11 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-
 # ---------------------------------------------------
 # CAMBIAR
 # ---------------------------------------------------
-CELDA = 3
-PLAYER = 0
+CELDA = 1
+PLAYER = 9
 VISITANTE = False
 # PLAYER ESPECIAL = 0
 # ---------------------------------------------------
@@ -43,14 +42,37 @@ for i in range(num_rows):
         iY = 0
     field[iY, iX] += 1
 
-# Crear el mapa de calor
 plt.figure(figsize=(10, 6))
-sns.heatmap(field, cmap='RdYlGn_r', vmin=0, vmax=800 ,annot=False, cbar=True, xticklabels=False, yticklabels=False)
+sns.heatmap(field/data.iloc[num_rows-1, 1], cmap='RdYlGn_r', vmin=0, vmax=0.25,  annot=False, cbar=True, cbar_kws={'label': 'Visitas por segundo'})
+
+# Ajustar las etiquetas de los ejes para mostrar 4 marcas
+x_ticks = [0, cols // 4, cols // 2, 3 * cols // 4,  cols]
+y_ticks = [0, rows // 4, rows // 2, 3* rows // 4, rows]
+
+plt.xticks(ticks=x_ticks, labels=[int(tick * CELDA) for tick in x_ticks])
+plt.yticks(ticks=y_ticks, labels=[int(tick * CELDA) for tick in y_ticks])
+
+# Invertir el eje y para que el origen esté en la parte inferior izquierda
+plt.gca().invert_yaxis()
 
 # Mostrar el gráfico
 plt.show()
 
+plt.figure(figsize=(10, 6))
+plt.imshow(field/data.iloc[num_rows-1, 1], cmap='RdYlGn_r', interpolation='bicubic', vmin=0, vmax=0.25)
 
+# Ajustar las etiquetas de los ejes para mostrar 4 marcas
+x_ticks = [0, cols // 4, cols // 2, 3 * cols // 4,  cols]
+y_ticks = [0, rows // 4, rows // 2, 3* rows // 4, rows]
+
+plt.xticks(ticks=x_ticks, labels=[int(tick * CELDA) for tick in x_ticks])
+plt.yticks(ticks=y_ticks, labels=[int(tick * CELDA) for tick in y_ticks])
+
+# Invertir el eje y para que el origen esté en la parte inferior izquierda
+plt.gca().invert_yaxis()
+
+# Mostrar el gráfico
+plt.show()
 
 
 

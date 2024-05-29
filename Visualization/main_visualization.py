@@ -14,7 +14,7 @@ DEFAULT_INPUT_PATH = '../Simulation/input/'
 AVG_PATH = '/animation_output/'
 #PARTICLES_COORDINATES_FILE2 = ('../../Simulation/output/SimulationData_' + str(N) + '_' + str(FAKE_L) +
 #                               '_' + str(SPEED) + '.csv')
-PLAYERS_COORDINATES_FILE = '../Simulation/Output/Salida.csv'
+PLAYERS_COORDINATES_FILE = '../Simulation/Output/Salida_todo.csv'
 #SIMULATION_INPUT_JSON = ('../../Simulation/output/' + 'StateData_' + str(N) + '_' + str(FAKE_L) +
 #                         '_' + str(SPEED) + '.json')
 CONFIG_FILE = '../../Simulation/input/input.json'
@@ -26,7 +26,7 @@ OUTPUT_FILENAME = 'match_animation'
 HEIGHT = 68
 WIDTH = 105
 RADIUS_PLAYERS = 0.3 * 2
-RADIUS_BALL = 0.1 * 2
+RADIUS_BALL = 0.3 * 2
 # ---------------------------------------------------
 # Video stuff
 # ---------------------------------------------------

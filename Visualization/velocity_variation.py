@@ -26,7 +26,7 @@ for filename in os.listdir(data_directory):
 
         # Encuentra la distancia mínima
         distance_prom = distances.mean()
-        distance_std = distances.std()
+        distance_std = distances.std() / np.sqrt(len(distances))
 
         # Guarda el nombre del archivo y la distancia mínima
         total_distances.append((float(re.search(regex, filename).group(1)), distance_prom, distance_std))
@@ -53,6 +53,7 @@ distances_df.sort_values(by="Filename", inplace=True)
 # Crea el gráfico de distancias mínimas
 plt.figure(figsize=(10, 6))
 plt.errorbar(distances_df['Filename'], distances_df["Distance"], yerr=distances_df['Error'], fmt='o-', label='Min Distance')
+plt.ylim(bottom=0, top=30)
 plt.xlabel("Velocidad deseada (m/s)", fontsize=16)
 plt.ylabel("Distancia (m)", fontsize=16)
 plt.ticklabel_format(axis="y", style="sci", useMathText=True)

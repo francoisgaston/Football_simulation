@@ -25,16 +25,16 @@ for filename in os.listdir(data_directory):
         distances = np.sqrt((df['Sx'] - df['Bx'])**2 + (df['Sy'] - df['By'])**2)
 
         if filename == "Salida_0.1_tao.csv":
-            plt.plot(distances, label='τ=' + str(0.1) + ' s')
+            plt.plot(df['Time'], distances, label='τ=' + str(0.1) + ' s')
         if filename == "Salida_0.65_tao.csv":
-            plt.plot(distances, label='τ=' + str(0.65) + ' s')
+            plt.plot(df['Time'], distances, label='τ=' + str(0.65) + ' s')
         if filename == "Salida_0.95_tao.csv":
-            plt.plot(distances, label='τ=' + str(0.95) + ' s')
+            plt.plot(df['Time'], distances, label='τ=' + str(0.95) + ' s')
 
 
         # Encuentra la distancia mínima
         distance_prom = distances.mean()
-        distance_std = distances.std()
+        distance_std = distances.std() / np.sqrt(len(distances))
 
         # Guarda el nombre del archivo y la distancia mínima
         total_distances.append((float(re.search(regex, filename).group(1)), distance_prom, distance_std))

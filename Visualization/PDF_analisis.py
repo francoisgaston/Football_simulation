@@ -16,7 +16,7 @@ PLAYER_ESPECIAL = 0
 # ---------------------------------------------------
 
 # Leer los datos desde el archivo CSV
-data = pd.read_csv('../Simulation/Output/Salida.csv')
+data = pd.read_csv('../Simulation/Output/Salida_todo.csv')
 num_rows, num_cols = data.shape
 
 player_numbers = [4 + PLAYER_1*2, 4 + PLAYER_2*2, 4 + PLAYER_3*2, 4 + PLAYER_ESPECIAL*2]
@@ -32,17 +32,25 @@ for player_number in player_numbers:
         posY = data.iloc[i, j+1]
         next_posY = data.iloc[i+1, j+1]
         velocity = np.sqrt((posX - next_posX)**2 + (posY - next_posY)**2) / (1/24.0)
-        velocities.append(velocity)
+        if velocity < 6:
+            velocities.append(velocity)
 
-    sns.kdeplot(velocities, fill=True)
+    counts, bin_edges = np.histogram(velocities, bins='sturges', density=True)
+    bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+
+    label = ''
     if player_number == 4 + PLAYER_ESPECIAL*2:
-        plt.hist(velocities, density=True, label='Jugador')
+        label = 'Jugador'
+        velocities.append(0)
     if player_number == 4 + PLAYER_1*2:
-        plt.hist(velocities, density=True, label='Arquero')
+        label = 'Arquero'
     if player_number == 4 + PLAYER_2*2:
-        plt.hist(velocities, density=True, label='Lateral')
+        label = 'Lateral'
     if player_number == 4 + PLAYER_3*2:
-        plt.hist(velocities, density=True, label='Delantero')
+        label = 'Delantero'
+
+    plt.plot(bin_centers, counts, linestyle='-', marker='o', label=label)
+    #plt.hist(velocities, bins='sturges', density=True, histtype='step')
 
 plt.xlabel("Velocidad (m/s)", fontsize=16)
 plt.ylabel("PDF", fontsize=16)
