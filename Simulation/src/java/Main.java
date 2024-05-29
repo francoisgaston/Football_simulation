@@ -13,9 +13,9 @@ public class Main {
         double v_deseada = 5;
         double tao = 0.5;
 
-        double[][] Local = new double[141156][33];
+        double[][] Local = new double[141160][33];
         Utils.readCSV("Simulation/Input/TrackingData_Local.csv", Local);
-        double[][] Visitante = new double[141156][29];
+        double[][] Visitante = new double[141160][29];
         Utils.readCSV("Simulation/Input/TrackingData_Visitante.csv", Visitante);
 
         oneSimulation(inicio_intervalo, largo, v_deseada, tao, Local, Visitante);

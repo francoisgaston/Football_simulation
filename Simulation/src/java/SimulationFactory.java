@@ -80,13 +80,9 @@ public class SimulationFactory {
         int i_posta = 0;
 
         for(int i=0; i_posta<largo; i++){
+            System.out.println(i);
+            System.out.println(i_posta);
             if(!Double.isNaN(Local[inicio_intervalo + i][31])){
-                if(!Double.isNaN(Local[inicio_intervalo + i][26])){
-                    System.out.println(data[i_posta][0][0]);
-                }
-                if(!Double.isNaN(Visitante[inicio_intervalo + i][26])){
-                    System.out.println(data[i_posta][0][0]);
-                }
                 //[frame, time]
                 data[i_posta][0][0] = Local[inicio_intervalo + i][1];
                 data[i_posta][0][1] = Local[inicio_intervalo + i][2];
@@ -94,10 +90,10 @@ public class SimulationFactory {
                 data[i_posta][1][0] = Local[inicio_intervalo + i][31] * Utils.LARGE_X;
                 data[i_posta][1][1] = Local[inicio_intervalo + i][32] * Utils.LARGE_Y;
                 for(int j=0; j<11; j++){
-                    data[i_posta][2+j][0] = Local[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
-                    data[i_posta][2+j][1] = Local[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
-                    data[i_posta][2+j+11][0] = Visitante[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
-                    data[i_posta][2+j+11][1] = Visitante[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
+                    data[i_posta][2+j][0] = Utils.LARGE_X - Local[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
+                    data[i_posta][2+j][1] = Utils.LARGE_Y - Local[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
+                    data[i_posta][2+j+11][0] = Utils.LARGE_X - Visitante[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
+                    data[i_posta][2+j+11][1] = Utils.LARGE_Y - Visitante[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;
                 }
                 i_posta++;
             }
