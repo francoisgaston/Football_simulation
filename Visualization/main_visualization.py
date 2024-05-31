@@ -14,7 +14,7 @@ DEFAULT_INPUT_PATH = '../Simulation/input/'
 AVG_PATH = '/animation_output/'
 #PARTICLES_COORDINATES_FILE2 = ('../../Simulation/output/SimulationData_' + str(N) + '_' + str(FAKE_L) +
 #                               '_' + str(SPEED) + '.csv')
-PLAYERS_COORDINATES_FILE = '../Simulation/Output/Salida_todo.csv'
+PLAYERS_COORDINATES_FILE = '../Simulation/Output/Salida.csv'
 #SIMULATION_INPUT_JSON = ('../../Simulation/output/' + 'StateData_' + str(N) + '_' + str(FAKE_L) +
 #                         '_' + str(SPEED) + '.json')
 CONFIG_FILE = '../../Simulation/input/input.json'
@@ -48,7 +48,7 @@ def complete_visualization_opencv(players_coords):
     SCALED_HEIGHT = int(HEIGHT * SCALE_FACTOR)
     SCALED_WIDTH = int(WIDTH * SCALE_FACTOR)
 
-    background_img = cv2.imread('./plots/cancha_de_futbol2.jpg')
+    background_img = cv2.imread('./plots/cancha_lisa.png')
     background_img = cv2.resize(background_img, (SCALED_WIDTH, SCALED_HEIGHT))
 
     video_writer = cv2.VideoWriter(OUTPUT_FILENAME + '.' + MP4_FORMAT, fourcc, FPS, (SCALED_WIDTH, SCALED_HEIGHT))

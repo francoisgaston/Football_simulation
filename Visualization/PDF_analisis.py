@@ -53,6 +53,6 @@ for player_number in player_numbers:
     #plt.hist(velocities, bins='sturges', density=True, histtype='step')
 
 plt.xlabel("Velocidad (m/s)", fontsize=16)
-plt.ylabel("PDF", fontsize=16)
+plt.ylabel("PDF (s/m)", fontsize=16)
 plt.legend(bbox_to_anchor=(0.5, 1.1), loc='upper center', borderaxespad=0, fontsize=12, ncol=4)
 plt.show()
