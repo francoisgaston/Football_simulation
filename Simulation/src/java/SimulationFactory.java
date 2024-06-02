@@ -6,8 +6,8 @@ public class SimulationFactory {
 
     public static void simulate(double v_deseada, double tao ,double[][][] data, BufferedWriter bw) throws IOException {
         double[] SpecialPlayerPosition = new double[]{
-            data[0][1][0] + Utils.INIT_SPECIAL_X, // X = 0
-            data[0][1][1] + Utils.INIT_SPECIAL_Y, // Y = 1
+            data[0][1][0] - Utils.INIT_SPECIAL_X, // X = 0
+            data[0][1][1] - Utils.INIT_SPECIAL_Y, // Y = 1
             Utils.VEL_SPECIAL_X * v_deseada, // Vx = 2
             Utils.VEL_SPECIAL_Y * v_deseada}; // Vy = 3
 
