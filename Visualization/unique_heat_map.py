@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 # CAMBIAR
 # ---------------------------------------------------
 CELDA = 2
-PLAYER = 0
+PLAYER = 1
 VISITANTE = False
 # PLAYER ESPECIAL = 0
 # ---------------------------------------------------
 
 # Leer los datos desde el archivo CSV
-data = pd.read_csv('../Simulation/Output/Salida.csv')
+data = pd.read_csv('../Simulation/Output/Salida_todo.csv')
 num_rows, num_cols = data.shape
 
 rows = 68 // CELDA # Redondear hacia abajo
@@ -41,13 +41,14 @@ for i in range(num_rows):
         iX = 0
     if(iY < 0):
         iY = 0
+    iY = rows - iY - 1
     if 67942 > data.iloc[i, 0]:
         field_1[iY, iX] += 1
     else:
         field_2[iY, iX] += 1
 
 plt.figure(figsize=(10, 6))
-sns.heatmap(field_1/data.iloc[num_rows-1, 1], cmap='RdYlGn_r',  annot=False, cbar=True, cbar_kws={'label': 'Visitas por segundo'}, vmax=0.25)
+sns.heatmap(field_1/data.iloc[num_rows-1, 1], cmap='RdYlGn_r',  annot=False, cbar=True, cbar_kws={'label': 'Visitas por segundo'}, vmax=0.27)
 
 # Ajustar las etiquetas de los ejes para mostrar 4 marcas
 x_ticks = [0, cols // 4, cols // 2, 3 * cols // 4,  cols]
@@ -63,7 +64,7 @@ plt.gca().invert_yaxis()
 plt.show()
 
 plt.figure(figsize=(10, 6))
-sns.heatmap(field_2/data.iloc[num_rows-1, 1], cmap='RdYlGn_r',  annot=False, cbar=True, cbar_kws={'label': 'Visitas por segundo'})
+sns.heatmap(field_2/data.iloc[num_rows-1, 1], cmap='RdYlGn_r',  annot=False, cbar=True, cbar_kws={'label': 'Visitas por segundo'}, vmax=0.27)
 
 # Ajustar las etiquetas de los ejes para mostrar 4 marcas
 x_ticks = [0, cols // 4, cols // 2, 3 * cols // 4,  cols]

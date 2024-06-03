@@ -16,7 +16,7 @@ PLAYER_ESPECIAL = 0
 # ---------------------------------------------------
 
 # Leer los datos desde el archivo CSV
-data = pd.read_csv('../Simulation/Output/Salida_todo.csv')
+data = pd.read_csv('../Simulation/Output/Salida.csv')
 num_rows, num_cols = data.shape
 
 player_numbers = [4 + PLAYER_1*2, 4 + PLAYER_2*2, 4 + PLAYER_3*2, 4 + PLAYER_ESPECIAL*2]
@@ -40,14 +40,14 @@ for player_number in player_numbers:
 
     label = ''
     if player_number == 4 + PLAYER_ESPECIAL*2:
-        label = 'Jugador'
+        label = 'Virtual'
         velocities.append(0)
     if player_number == 4 + PLAYER_1*2:
         label = 'Arquero'
     if player_number == 4 + PLAYER_2*2:
         label = 'Lateral'
     if player_number == 4 + PLAYER_3*2:
-        label = 'Delantero'
+        label = 'Central'
 
     plt.plot(bin_centers, counts, linestyle='-', marker='o', label=label)
     #plt.hist(velocities, bins='sturges', density=True, histtype='step')

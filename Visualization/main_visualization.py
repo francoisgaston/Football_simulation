@@ -14,7 +14,7 @@ DEFAULT_INPUT_PATH = '../Simulation/input/'
 AVG_PATH = '/animation_output/'
 #PARTICLES_COORDINATES_FILE2 = ('../../Simulation/output/SimulationData_' + str(N) + '_' + str(FAKE_L) +
 #                               '_' + str(SPEED) + '.csv')
-PLAYERS_COORDINATES_FILE = '../Simulation/Output/Salida.csv'
+PLAYERS_COORDINATES_FILE = '../Simulation/Output/Salida_0.95_tao.csv'
 #SIMULATION_INPUT_JSON = ('../../Simulation/output/' + 'StateData_' + str(N) + '_' + str(FAKE_L) +
 #                         '_' + str(SPEED) + '.json')
 CONFIG_FILE = '../../Simulation/input/input.json'
@@ -38,7 +38,7 @@ LOCAL_COLOR = (0, 100, 255)
 VISITING_COLOR = (255, 0, 0)
 CIRCLE_COLOR = (0, 0, 255)
 PITCH_COLOR = (0, 255, 0)
-FPS = 30.0
+FPS = 25.0
 VIDEO_RES = 2000
 
 
@@ -48,7 +48,7 @@ def complete_visualization_opencv(players_coords):
     SCALED_HEIGHT = int(HEIGHT * SCALE_FACTOR)
     SCALED_WIDTH = int(WIDTH * SCALE_FACTOR)
 
-    background_img = cv2.imread('./plots/cancha_lisa.png')
+    background_img = cv2.imread('./plots/la_cancha_de_futbol.png')
     background_img = cv2.resize(background_img, (SCALED_WIDTH, SCALED_HEIGHT))
 
     video_writer = cv2.VideoWriter(OUTPUT_FILENAME + '.' + MP4_FORMAT, fourcc, FPS, (SCALED_WIDTH, SCALED_HEIGHT))
@@ -67,14 +67,14 @@ def complete_visualization_opencv(players_coords):
         for i in range(1,12): # [ 1, 12 )
             local_player = [int(row['LP' + str(i) +'x'] * SCALE_FACTOR), int(row['LP' + str(i) +'y'] * SCALE_FACTOR)]
             cv2.circle(frame, tuple(local_player), int(RADIUS_PLAYERS * SCALE_FACTOR), LOCAL_COLOR, -1)
-            if i == 13:
+            if i == 13: # 1 y 9
                 cv2.circle(frame, tuple(local_player), int(RADIUS_PLAYERS * SCALE_FACTOR * 5), CIRCLE_COLOR, 3)
 
         # Visiting players
         for i in range(1,12): # [ 1, 12 )
             visiting_player = [int(row['VP' + str(i) +'x'] * SCALE_FACTOR), int(row['VP' + str(i) +'y'] * SCALE_FACTOR)]
             cv2.circle(frame, tuple(visiting_player), int(RADIUS_PLAYERS * SCALE_FACTOR), VISITING_COLOR, -1)
-            if i == 13:
+            if i == 13: # 10
                 cv2.circle(frame, tuple(visiting_player), int(RADIUS_PLAYERS * SCALE_FACTOR * 5), CIRCLE_COLOR, 3)
 
         # Ball

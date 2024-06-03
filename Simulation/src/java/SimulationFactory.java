@@ -87,8 +87,8 @@ public class SimulationFactory {
                 data[i_posta][0][0] = Local[inicio_intervalo + i][1];
                 data[i_posta][0][1] = Local[inicio_intervalo + i][2];
                 //[Bx, By]
-                data[i_posta][1][0] = Local[inicio_intervalo + i][31] * Utils.LARGE_X;
-                data[i_posta][1][1] = Local[inicio_intervalo + i][32] * Utils.LARGE_Y;
+                data[i_posta][1][0] = Utils.LARGE_X - Local[inicio_intervalo + i][31] * Utils.LARGE_X;
+                data[i_posta][1][1] = Utils.LARGE_Y - Local[inicio_intervalo + i][32] * Utils.LARGE_Y;
                 for(int j=0; j<11; j++){
                     data[i_posta][2+j][0] = Utils.LARGE_X - Local[inicio_intervalo + i][3+j*2] * Utils.LARGE_X;
                     data[i_posta][2+j][1] = Utils.LARGE_Y - Local[inicio_intervalo + i][3+j*2+1] * Utils.LARGE_Y;

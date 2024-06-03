@@ -7,26 +7,26 @@ public class Main {
 
         // PONER EN UN INPUT
         int inicio_intervalo = 55;
-        int largo = 9000;
+        int largo = 80000;
         //int inicio_intervalo = 1435;
         //int largo = 3011;
         double v_deseada = 5;
         double tao = 0.5;
 
         double[][] Local = new double[141160][33];
-        Utils.readCSV("Simulation/Input/TrackingData_Local.csv", Local);
+        Utils.readCSV("Simulation/Input/TrackingData_Local_todo.csv", Local);
         double[][] Visitante = new double[141160][29];
-        Utils.readCSV("Simulation/Input/TrackingData_Visitante.csv", Visitante);
+        Utils.readCSV("Simulation/Input/TrackingData_Visitante_todo.csv", Visitante);
 
         oneSimulation(inicio_intervalo, largo, v_deseada, tao, Local, Visitante);
 
-        tao_variation(inicio_intervalo, largo, v_deseada, Local, Visitante);
+        //tao_variation(inicio_intervalo, largo, v_deseada, Local, Visitante);
 
-        velocity_variation(inicio_intervalo, largo, tao, Local, Visitante);
+        //velocity_variation(inicio_intervalo, largo, tao, Local, Visitante);
     }
 
     public static void oneSimulation(int inicio_intervalo, int largo, double v_deseada, double tao, double[][] Local, double[][] Visitante){
-        String OutputPath = "Simulation/Output/Salida.csv";
+        String OutputPath = "Simulation/Output/Salida_todo_2.csv";
         Simulation_wrapper(inicio_intervalo, largo, v_deseada, tao, OutputPath, Local, Visitante);
     }
 

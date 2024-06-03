@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 # ---------------------------------------------------
 # CAMBIAR
 # ---------------------------------------------------
-CELDA = 1
+CELDA = 2
 # ---------------------------------------------------
 
 # Leer los datos desde el archivo CSV
-data = pd.read_csv('../Simulation/Output/Salida_todo.csv')
+data = pd.read_csv('../Simulation/Output/Salida_todo_2.csv')
 num_rows, num_cols = data.shape
 
 rows = 68 // CELDA  # Redondear hacia abajo
@@ -35,11 +35,12 @@ for i in range(num_rows):
             iX = 0
         if iY < 0:
             iY = 0
-        if j != 6 and j != 6 + 11 * 2:
-            if 67942 > data.iloc[i, 0]:
-                field_1[iY, iX] += 1
-            else:
-                field_2[iY, iX] += 1
+        iY = rows - iY - 1
+        #if j != 6 and j != 6 + 11 * 2:
+        field_1[iY, iX] += 1
+        #if 67942 > data.iloc[i, 0]:
+        #else:
+        #    field_2[iY, iX] += 1
 
 # Crear el mapa de calor
 plt.figure(figsize=(10, 6))
